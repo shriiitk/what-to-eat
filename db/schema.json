@@ -1,0 +1,23 @@
+db.recipes.save({ title : "Chicken Curry" , selections : 5 , tags : [ "Chicken" , "Onion", "Garlic", "Tomato"  ] });
+db.recipes.save({ title : "Egg fried rice" , selections : 2 , tags : [ "Egg" , "Rice", "Onion"] });
+db.recipes.save({ title : "Chicken Tikka Masala" , selections : 8 , tags : [ "Chicken" , "Yogurt", "Ginger", "Garlic", "Lemon"] });
+db.recipes.save({ title : "Kadai Paneer" , selections : 2 , tags : [ "Paneer" , "Onion", "Capsicum", "Garlic", "Tomato"] });
+db.recipes.save({ title : "Butter Chicken" , selections : 10 , tags : [ "Chicken" , "Onion", "Butter", "Cashewnuts", "Cream", "Yogurt"  ] });
+db.recipes.save({ title : "Tangdi Kebab" , selections : 4 , tags : [ "Chicken" , "Butter", "Yogurt"  ] });
+db.recipes.save({ title : "Onion Utthapam" , selections : 3 , tags : [ "Onion" , "Rice" ] });
+
+db.recipes.ensureIndex({title:"text", tags:"text"},{weights:{"title":10}});
+db.recipes.getIndices();
+
+db.recipes.find( { tags : "Onion" }).sort( { selections: -1 } ).limit(3);
+db.recipes.runCommand("text", {search: "Onion"});
+
+db.tags.save({name : "Chicken", synonyms : ["Murga"]});
+db.tags.save({name : "Onion", synonyms : ["Pyaz", "Kanda"]});
+db.tags.save({name : "Butter", synonyms : ["Makkhan", "Maska"]});
+db.tags.save({name : "Yogurt", synonyms : ["Dahi", "Curd"]});
+
+db.tags.ensureIndex({name:"text", synonyms:"text"},{weights:{"name":10}});
+
+db.tags.find( { name : "Onion" }).limit(5);
+db.tags.runCommand("text", {search: "pyaz"});
